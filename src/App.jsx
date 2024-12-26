@@ -56,19 +56,20 @@ const InvoiceForm = ({ onSave }) => {
   };
 
   return (
-	<div className="border-b-2 border-gray-300 pb-8 mb-8 print:border-b">
-	  <div className="flex justify-between items-start">
-		<div className="print:text-black">
-		  <h1 className="text-3xl font-bold text-gray-800">Kaos21 Pekanbaru</h1>
-		  <p className="text-gray-600 mt-1">Jl. Nenas No. 12C, Kel. Jadirejo, Kec. Sukajadi</p>
-		  <p className="text-gray-600">Pekanbaru, Riau</p>
-		  <p className="text-gray-600">Telp: 0877-7734-7550</p>
-		</div>
-		<div className="text-right">
-		  <h2 className="text-2xl font-bold text-blue-600 mb-2 print:text-black">INVOICE</h2>
-		</div>
-	  </div>
-	</div>
+    <div className="bg-white p-8 rounded-lg shadow-md print:shadow-none"> {/* Add parent div wrapper */}
+      <div className="border-b-2 border-gray-300 pb-8 mb-8 print:border-b">
+        <div className="flex justify-between items-start">
+          <div className="print:text-black">
+            <h1 className="text-3xl font-bold text-gray-800">Kaos21 Pekanbaru</h1>
+            <p className="text-gray-600 mt-1">Jl. Nenas No. 12C, Kel. Jadirejo, Kec. Sukajadi</p>
+            <p className="text-gray-600">Pekanbaru, Riau</p>
+            <p className="text-gray-600">Telp: 0877-7734-7550</p>
+          </div>
+          <div className="text-right">
+            <h2 className="text-2xl font-bold text-blue-600 mb-2 print:text-black">INVOICE</h2>
+          </div>
+        </div>
+      </div>
       
       <div className="grid grid-cols-2 gap-8 mb-8">
         <div>
@@ -124,7 +125,7 @@ const InvoiceForm = ({ onSave }) => {
             <Plus className="w-4 h-4 mr-2" />
             Tambah Item
           </button>
-        </div>
+      </div>
 
         <table className="w-full border-collapse">
 		  <thead>
@@ -210,7 +211,7 @@ const InvoiceForm = ({ onSave }) => {
           <div className="mt-8 text-sm text-gray-600">
             <p>Terima kasih atas kepercayaan Anda berbelanja di Kaos21 Pekanbaru.</p>
             <p>Pembayaran dapat dilakukan melalui transfer ke:</p>
-            <p className="font-medium mt-2">Bank BCA: 1234567890 a.n. Kaos21 Pekanbaru</p>
+            <p className="font-medium mt-2">Bank Mandiri 1310013894045 a.n. Ade Naufal Ammar</p>
           </div>
         </div>
       </div>
