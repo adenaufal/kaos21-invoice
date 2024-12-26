@@ -53,11 +53,39 @@ const InvoiceForm = ({ onSave }) => {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md print:shadow-none">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Kaos21 Pekanbaru</h1>
-        <div className="grid grid-cols-2 gap-4">
+      <div className="border-b-2 border-gray-300 pb-8 mb-8">
+        <div className="flex justify-between items-start">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <h1 className="text-3xl font-bold text-gray-800">Kaos21 Pekanbaru</h1>
+            <p className="text-gray-600 mt-1">Jl. Soekarno-Hatta (Arengka 1) No. 28</p>
+            <p className="text-gray-600">Pekanbaru, Riau</p>
+            <p className="text-gray-600">Telp: 0812-3456-7890</p>
+          </div>
+          <div className="text-right">
+            <h2 className="text-2xl font-bold text-blue-600 mb-2">INVOICE</h2>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-8 mb-8">
+        <div>
+          <h3 className="text-gray-600 font-semibold mb-4">Bill To:</h3>
+          <input
+            type="text"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            className="w-full p-2 border rounded mb-2"
+            placeholder="Nama Customer"
+          />
+          <textarea
+            className="w-full p-2 border rounded h-24"
+            placeholder="Alamat Customer"
+            value={customerAddress}
+            onChange={(e) => setCustomerAddress(e.target.value)}
+          />
+        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
               Nomor Invoice
             </label>
             <input
@@ -69,7 +97,7 @@ const InvoiceForm = ({ onSave }) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-600 mb-1">
               Tanggal
             </label>
             <input
@@ -78,19 +106,6 @@ const InvoiceForm = ({ onSave }) => {
               onChange={(e) => setInvoiceDate(e.target.value)}
               className="w-full p-2 border rounded"
             />
-          </div>
-        </div>
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Nama Customer
-          </label>
-          <input
-            type="text"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="Nama Customer"
-          />
         </div>
       </div>
 
@@ -106,10 +121,20 @@ const InvoiceForm = ({ onSave }) => {
           </button>
         </div>
 
-        <div className="space-y-4">
+        <table className="w-full border-t border-b">
+        <thead>
+          <tr className="bg-gray-50">
+            <th className="py-3 px-4 text-left">Deskripsi</th>
+            <th className="py-3 px-4 text-center w-24">Qty</th>
+            <th className="py-3 px-4 text-right w-32">Harga</th>
+            <th className="py-3 px-4 text-right w-32">Total</th>
+            <th className="py-3 px-4 w-16"></th>
+          </tr>
+        </thead>
+        <tbody>
           {items.map((item, index) => (
-            <div key={index} className="flex gap-4 items-start">
-              <div className="flex-grow">
+            <tr key={index} className="border-t">
+              <td className="py-3 px-4">
                 <input
                   type="text"
                   value={item.description}
@@ -117,48 +142,73 @@ const InvoiceForm = ({ onSave }) => {
                   className="w-full p-2 border rounded"
                   placeholder="Deskripsi Item"
                 />
-              </div>
-              <div className="w-24">
+              </td>
+              <td className="py-3 px-4">
                 <input
                   type="number"
                   value={item.quantity}
                   onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded text-center"
                   placeholder="Qty"
                   min="1"
                 />
-              </div>
-              <div className="w-32">
+              </td>
+              <td className="py-3 px-4">
                 <input
                   type="number"
                   value={item.price}
                   onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded text-right"
                   placeholder="Harga"
                 />
-              </div>
-              <div className="w-32 p-2 text-right">
-                {(item.quantity * item.price).toLocaleString('id-ID')}
-              </div>
-              <button
-                onClick={() => removeItem(index)}
-                className="p-2 text-red-600 hover:text-red-800"
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
-            </div>
+              </td>
+              <td className="py-3 px-4 text-right">
+                Rp {(item.quantity * item.price).toLocaleString('id-ID')}
+              </td>
+              <td className="py-3 px-4">
+                <button
+                  onClick={() => removeItem(index)}
+                  className="p-2 text-red-600 hover:text-red-800"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </td>
+            </tr>
           ))}
         </div>
       </div>
 
-      <div className="border-t pt-4">
-        <div className="flex justify-between text-lg font-semibold mb-2">
-          <span>Subtotal:</span>
-          <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
+        </tbody>
+      </table>
+
+      <div className="mt-8 border-t pt-8">
+        <div className="flex flex-col items-end space-y-4">
+          <div className="flex w-64 justify-between text-lg">
+            <span className="font-medium text-gray-600">Subtotal:</span>
+            <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
+          </div>
+          <div className="flex w-64 justify-between text-xl font-bold text-blue-600 border-t pt-4">
+            <span>Total:</span>
+            <span>Rp {calculateTotal().toLocaleString('id-ID')}</span>
+          </div>
         </div>
-        <div className="flex justify-between text-xl font-bold text-blue-600">
-          <span>Total:</span>
-          <span>Rp {calculateTotal().toLocaleString('id-ID')}</span>
+        
+        <div className="mt-8 pt-8 border-t">
+          <div className="space-y-2">
+            <h4 className="font-medium text-gray-700">Catatan:</h4>
+            <textarea
+              className="w-full p-2 border rounded h-24"
+              placeholder="Tambahkan catatan invoice..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </div>
+          
+          <div className="mt-8 text-sm text-gray-600">
+            <p>Terima kasih atas kepercayaan Anda berbelanja di Kaos21 Pekanbaru.</p>
+            <p>Pembayaran dapat dilakukan melalui transfer ke:</p>
+            <p className="font-medium mt-2">Bank BCA: 1234567890 a.n. Kaos21 Pekanbaru</p>
+          </div>
         </div>
       </div>
 
