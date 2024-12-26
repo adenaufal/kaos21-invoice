@@ -7,6 +7,8 @@ const InvoiceForm = ({ onSave }) => {
   const [items, setItems] = useState([{ description: '', quantity: 1, price: 0 }]);
   const [invoiceNumber, setInvoiceNumber] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [notes, setNotes] = useState('');
   const [invoiceDate, setInvoiceDate] = useState(
     new Date().toISOString().split('T')[0]
   );
