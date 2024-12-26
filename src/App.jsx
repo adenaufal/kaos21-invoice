@@ -56,20 +56,19 @@ const InvoiceForm = ({ onSave }) => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md print:shadow-none">
-      <div className="border-b-2 border-gray-300 pb-8 mb-8">
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">Kaos21 Pekanbaru</h1>
-            <p className="text-gray-600 mt-1">Jl. Soekarno-Hatta (Arengka 1) No. 28</p>
-            <p className="text-gray-600">Pekanbaru, Riau</p>
-            <p className="text-gray-600">Telp: 0812-3456-7890</p>
-          </div>
-          <div className="text-right">
-            <h2 className="text-2xl font-bold text-blue-600 mb-2">INVOICE</h2>
-          </div>
-        </div>
-      </div>
+	<div className="border-b-2 border-gray-300 pb-8 mb-8 print:border-b">
+	  <div className="flex justify-between items-start">
+		<div className="print:text-black">
+		  <h1 className="text-3xl font-bold text-gray-800">Kaos21 Pekanbaru</h1>
+		  <p className="text-gray-600 mt-1">Jl. Nenas No. 12C, Kel. Jadirejo, Kec. Sukajadi</p>
+		  <p className="text-gray-600">Pekanbaru, Riau</p>
+		  <p className="text-gray-600">Telp: 0877-7734-7550</p>
+		</div>
+		<div className="text-right">
+		  <h2 className="text-2xl font-bold text-blue-600 mb-2 print:text-black">INVOICE</h2>
+		</div>
+	  </div>
+	</div>
       
       <div className="grid grid-cols-2 gap-8 mb-8">
         <div>
@@ -78,11 +77,11 @@ const InvoiceForm = ({ onSave }) => {
             type="text"
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 border rounded print:border-0 print:p-0"
             placeholder="Nama Customer"
           />
           <textarea
-            className="w-full p-2 border rounded h-24"
+            className="w-full p-2 border rounded h-24 print:border-0 print:p-0"
             placeholder="Alamat Customer"
             value={customerAddress}
             onChange={(e) => setCustomerAddress(e.target.value)}
@@ -127,62 +126,62 @@ const InvoiceForm = ({ onSave }) => {
           </button>
         </div>
 
-        <table className="w-full border-t border-b">
-          <thead>
-            <tr className="bg-gray-50">
-              <th className="py-3 px-4 text-left">Deskripsi</th>
-              <th className="py-3 px-4 text-center w-24">Qty</th>
-              <th className="py-3 px-4 text-right w-32">Harga</th>
-              <th className="py-3 px-4 text-right w-32">Total</th>
-              <th className="py-3 px-4 w-16"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index} className="border-t">
-                <td className="py-3 px-4">
-                  <input
-                    type="text"
-                    value={item.description}
-                    onChange={(e) => updateItem(index, 'description', e.target.value)}
-                    className="w-full p-2 border rounded"
-                    placeholder="Deskripsi Item"
-                  />
-                </td>
-                <td className="py-3 px-4">
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
-                    className="w-full p-2 border rounded text-center"
-                    placeholder="Qty"
-                    min="1"
-                  />
-                </td>
-                <td className="py-3 px-4">
-                  <input
-                    type="number"
-                    value={item.price}
-                    onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
-                    className="w-full p-2 border rounded text-right"
-                    placeholder="Harga"
-                  />
-                </td>
-                <td className="py-3 px-4 text-right">
-                  Rp {(item.quantity * item.price).toLocaleString('id-ID')}
-                </td>
-                <td className="py-3 px-4">
-                  <button
-                    onClick={() => removeItem(index)}
-                    className="p-2 text-red-600 hover:text-red-800"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <table className="w-full border-collapse">
+		  <thead>
+			<tr className="bg-gray-50">
+			  <th className="py-3 px-4 text-left border">Deskripsi</th>
+			  <th className="py-3 px-4 text-center w-24 border">Qty</th>
+			  <th className="py-3 px-4 text-right w-32 border">Harga</th>
+			  <th className="py-3 px-4 text-right w-32 border">Total</th>
+			  <th className="py-3 px-4 w-16 print:hidden border"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			{items.map((item, index) => (
+			  <tr key={index}>
+				<td className="py-3 px-4 border">
+				  <input
+					type="text"
+					value={item.description}
+					onChange={(e) => updateItem(index, 'description', e.target.value)}
+					className="w-full p-2"
+					placeholder="Deskripsi Item"
+				  />
+				</td>
+				<td className="py-3 px-4 border">
+				  <input
+					type="number"
+					value={item.quantity}
+					onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
+					className="w-full p-2 text-center"
+					placeholder="Qty"
+					min="1"
+				  />
+				</td>
+				<td className="py-3 px-4 border">
+				  <input
+					type="number"
+					value={item.price}
+					onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
+					className="w-full p-2 text-right"
+					placeholder="Harga"
+				  />
+				</td>
+				<td className="py-3 px-4 text-right border">
+				  Rp {(item.quantity * item.price).toLocaleString('id-ID')}
+				</td>
+				<td className="py-3 px-4 print:hidden border">
+				  <button
+					onClick={() => removeItem(index)}
+					className="p-2 text-red-600 hover:text-red-800 print:hidden"
+				  >
+					<Trash2 className="w-5 h-5" />
+				  </button>
+				</td>
+			  </tr>
+			))}
+		  </tbody>
+		</table>
       </div>
 	  
 	  <div className="mt-8 border-t pt-8">
@@ -349,25 +348,53 @@ const InvoiceGenerator = () => {
       {/* Styles untuk print */}
       <style>{`
         @media print {
-          body * {
-            visibility: hidden;
-          }
-          .bg-white, .bg-white * {
-            visibility: visible;
-          }
-          .bg-white {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-          .print\\:hidden {
-            display: none !important;
-          }
-          .print\\:shadow-none {
-            box-shadow: none !important;
-          }
-        }
+		  /* Hilangkan semua border dan style input saat print */
+		  input, textarea {
+			border: none !important;
+			padding: 0 !important;
+			background: none !important;
+			font-size: inherit !important;
+			font-family: inherit !important;
+		  }
+		  
+		  /* Hilangkan tombol dan elemen UI lainnya */
+		  button, .print\:hidden {
+			display: none !important;
+		  }
+		  
+		  /* Hilangkan shadows */
+		  .shadow-md {
+			box-shadow: none !important;
+		  }
+		  
+		  /* Tambahkan border yang lebih tipis untuk tabel */
+		  table {
+			border-collapse: collapse;
+		  }
+		  
+		  table td, table th {
+			border: 1px solid #ddd !important;
+		  }
+		  
+		  /* Pastikan background putih */
+		  body {
+			background: white !important;
+		  }
+		  
+		  /* Atur ukuran font dan margin yang sesuai untuk print */
+		  .text-3xl {
+			font-size: 24pt !important;
+		  }
+		  
+		  .text-2xl {
+			font-size: 18pt !important;
+		  }
+		  
+		  /* Atur margin halaman */
+		  @page {
+			margin: 2cm;
+		  }
+		}
       `}</style>
     </div>
   );
