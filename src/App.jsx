@@ -7,11 +7,11 @@ const InvoiceForm = ({ onSave }) => {
   const [items, setItems] = useState([{ description: '', quantity: 1, price: 0 }]);
   const [invoiceNumber, setInvoiceNumber] = useState('');
   const [customerName, setCustomerName] = useState('');
-  const [customerAddress, setCustomerAddress] = useState('');
-  const [notes, setNotes] = useState('');
   const [invoiceDate, setInvoiceDate] = useState(
     new Date().toISOString().split('T')[0]
   );
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [notes, setNotes] = useState('');
 
   const addItem = () => {
     setItems([...items, { description: '', quantity: 1, price: 0 }]);
@@ -41,7 +41,9 @@ const InvoiceForm = ({ onSave }) => {
       number: invoiceNumber,
       date: invoiceDate,
       customer: customerName,
+      customerAddress: customerAddress,
       items: items,
+      notes: notes,
       subtotal: calculateSubtotal(),
       total: calculateTotal(),
       createdAt: new Date().toISOString()
@@ -65,6 +67,7 @@ const InvoiceForm = ({ onSave }) => {
           </div>
           <div className="text-right">
             <h2 className="text-2xl font-bold text-blue-600 mb-2">INVOICE</h2>
+          </div>
         </div>
       </div>
       
@@ -108,10 +111,11 @@ const InvoiceForm = ({ onSave }) => {
               onChange={(e) => setInvoiceDate(e.target.value)}
               className="w-full p-2 border rounded"
             />
+          </div>
         </div>
       </div>
-
-      <div className="mb-8">
+	  
+	  <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-gray-800">Item</h2>
           <button
@@ -124,66 +128,64 @@ const InvoiceForm = ({ onSave }) => {
         </div>
 
         <table className="w-full border-t border-b">
-        <thead>
-          <tr className="bg-gray-50">
-            <th className="py-3 px-4 text-left">Deskripsi</th>
-            <th className="py-3 px-4 text-center w-24">Qty</th>
-            <th className="py-3 px-4 text-right w-32">Harga</th>
-            <th className="py-3 px-4 text-right w-32">Total</th>
-            <th className="py-3 px-4 w-16"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, index) => (
-            <tr key={index} className="border-t">
-              <td className="py-3 px-4">
-                <input
-                  type="text"
-                  value={item.description}
-                  onChange={(e) => updateItem(index, 'description', e.target.value)}
-                  className="w-full p-2 border rounded"
-                  placeholder="Deskripsi Item"
-                />
-              </td>
-              <td className="py-3 px-4">
-                <input
-                  type="number"
-                  value={item.quantity}
-                  onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
-                  className="w-full p-2 border rounded text-center"
-                  placeholder="Qty"
-                  min="1"
-                />
-              </td>
-              <td className="py-3 px-4">
-                <input
-                  type="number"
-                  value={item.price}
-                  onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
-                  className="w-full p-2 border rounded text-right"
-                  placeholder="Harga"
-                />
-              </td>
-              <td className="py-3 px-4 text-right">
-                Rp {(item.quantity * item.price).toLocaleString('id-ID')}
-              </td>
-              <td className="py-3 px-4">
-                <button
-                  onClick={() => removeItem(index)}
-                  className="p-2 text-red-600 hover:text-red-800"
-                >
-                  <Trash2 className="w-5 h-5" />
-                </button>
-              </td>
+          <thead>
+            <tr className="bg-gray-50">
+              <th className="py-3 px-4 text-left">Deskripsi</th>
+              <th className="py-3 px-4 text-center w-24">Qty</th>
+              <th className="py-3 px-4 text-right w-32">Harga</th>
+              <th className="py-3 px-4 text-right w-32">Total</th>
+              <th className="py-3 px-4 w-16"></th>
             </tr>
-          ))}
-        </div>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index} className="border-t">
+                <td className="py-3 px-4">
+                  <input
+                    type="text"
+                    value={item.description}
+                    onChange={(e) => updateItem(index, 'description', e.target.value)}
+                    className="w-full p-2 border rounded"
+                    placeholder="Deskripsi Item"
+                  />
+                </td>
+                <td className="py-3 px-4">
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
+                    className="w-full p-2 border rounded text-center"
+                    placeholder="Qty"
+                    min="1"
+                  />
+                </td>
+                <td className="py-3 px-4">
+                  <input
+                    type="number"
+                    value={item.price}
+                    onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
+                    className="w-full p-2 border rounded text-right"
+                    placeholder="Harga"
+                  />
+                </td>
+                <td className="py-3 px-4 text-right">
+                  Rp {(item.quantity * item.price).toLocaleString('id-ID')}
+                </td>
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => removeItem(index)}
+                    className="p-2 text-red-600 hover:text-red-800"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-        </tbody>
-      </table>
-
-      <div className="mt-8 border-t pt-8">
+	  
+	  <div className="mt-8 border-t pt-8">
         <div className="flex flex-col items-end space-y-4">
           <div className="flex w-64 justify-between text-lg">
             <span className="font-medium text-gray-600">Subtotal:</span>
@@ -276,12 +278,12 @@ const InvoiceList = ({ invoices, onExport }) => {
   );
 };
 
+// Komponen utama
 const InvoiceGenerator = () => {
   const [activeTab, setActiveTab] = useState('create');
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    // Load invoices from localStorage on component mount
     const savedInvoices = JSON.parse(localStorage.getItem('invoices') || '[]');
     setInvoices(savedInvoices);
   }, []);
